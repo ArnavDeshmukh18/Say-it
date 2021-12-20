@@ -10,19 +10,20 @@ class Loginorsignbutton extends StatelessWidget {
     Key? key,
     required this.width,
     required this.size,
-    required this.Parameter,
+    required this.Parameter, required this.onclicked,
   }) : super(key: key);
 
   final double width;
   final Size size;
   final String Parameter;
+  final VoidCallback onclicked;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: width / 25, right: width / 25),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onclicked,
         child: Padding(
           padding: EdgeInsets.only(
               left: width / 2.95,
@@ -50,9 +51,11 @@ class InputBox extends StatelessWidget {
 
   final double width;
   final TextInputType inputtype;
-  late String _name;
-  late String _email;
-  late String _password;
+var parameter;
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +65,14 @@ class InputBox extends StatelessWidget {
       color: const Color(0xffEBF2FA),
       margin:
           EdgeInsets.only(top: width / 35, left: width / 25, right: width / 25),
-      child: TextField(
+      child: TextFormField(
         keyboardType: inputtype,
         cursorColor: Colors.black54,
+        validator: (var _parameter)
+        {
+
+
+        },
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(width / 30),
@@ -174,5 +182,59 @@ class Google_or_facebook_signup_button extends StatelessWidget {
           )),
       margin: EdgeInsets.all(width / 23),
     ));
+  }
+}
+
+
+class inputform extends StatefulWidget {
+   inputform({Key? key, required this.width, required this.inputtype, required this.Parameter}) : super(key: key);
+  final double width;
+  final TextInputType inputtype;
+  var parameter;
+late final String Parameter;
+
+  @override
+  _inputformState createState() => _inputformState();
+}
+
+class _inputformState extends State<inputform> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.width / 1.10,
+      height: widget.width / 10,
+      color: const Color(0xffEBF2FA),
+      margin:
+      EdgeInsets.only(top:widget.width / 35, left: widget.width / 25, right: widget.width / 25),
+      child: TextFormField(
+        keyboardType: widget.inputtype,
+        cursorColor: Colors.black54,
+        validator: (var _parameter)
+        {
+           if(_parameter!.isNotEmpty)
+             {
+
+               return null;
+             }
+           else{
+             return 'Invalid Input';
+           }
+
+        },
+        onSaved: (value) => setState(() =>  widget.Parameter= value!),
+        decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(widget.width / 30),
+            borderSide: const BorderSide(color: Colors.black38),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(widget.width / 30),
+            borderSide: const BorderSide(color: Colors.black38),
+          ),
+        ),
+      ),
+    );;
   }
 }

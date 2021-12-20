@@ -19,10 +19,10 @@ class _HomepageState extends State<Homepage> {
     Size size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
-    String _name;
-    String _email;
-    String _password;
-    final GlobalKey _formkey = GlobalKey();
+    String _name = '';
+    String _email = '';
+    String _password = '';
+    final _formkey = GlobalKey<FormState>();
 
     return Container(
       decoration: const BoxDecoration(
@@ -95,10 +95,10 @@ class _HomepageState extends State<Homepage> {
                     size: size,
                     parameter_name: "Email",
                   ),
-                  InputBox(
-                    width: width,
-                    inputtype: TextInputType.emailAddress,
-                  ),
+                  inputform(
+                      width: width,
+                      inputtype: TextInputType.name,
+                      Parameter: _email),
                   SizedBox(
                     height: height / 50,
                   ),
@@ -107,9 +107,10 @@ class _HomepageState extends State<Homepage> {
                     size: size,
                     parameter_name: "Password",
                   ),
-                  InputBox(
+                  inputform(
                     width: width,
                     inputtype: TextInputType.visiblePassword,
+                    Parameter: _password,
                   ),
                   SizedBox(
                     height: height / 15,
@@ -118,6 +119,9 @@ class _HomepageState extends State<Homepage> {
                     width: width,
                     size: size,
                     Parameter: "Log in",
+                    onclicked: () {
+                      final invalid = _formkey.currentState!.validate();
+                    },
                   ),
                   SizedBox(
                     height: height / 20,
