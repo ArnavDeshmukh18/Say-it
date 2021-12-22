@@ -17,27 +17,24 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
-  final _auth=FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final _formkey=GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
   @override
-
-
   String? _email;
   String? _name;
   String? _password;
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
- ;
+
 
     bool isPasswordValid(String password) => password.length == 9;
-
 
     return Container(
       decoration: const BoxDecoration(
@@ -50,8 +47,7 @@ class _HomepageState extends State<Homepage> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Form(
-              key: _formkey
-              ,
+              key: _formkey,
               child: ListView(
                 children: [
                   Row(
@@ -127,23 +123,24 @@ class _HomepageState extends State<Homepage> {
                     size: size,
                     parameter_name: "Email",
                   ),
-
-
                   Container(
                     width: width / 1.10,
                     height: width / 10,
                     color: const Color(0xffEBF2FA),
-                    margin:
-                    EdgeInsets.only(top: width / 35, left: width / 25, right: width / 25),
+                    margin: EdgeInsets.only(
+                        top: width / 35, left: width / 25, right: width / 25),
                     child: TextFormField(
-                      keyboardType:TextInputType.emailAddress ,
+                      keyboardType: TextInputType.emailAddress,
                       cursorColor: Colors.black54,
                       textAlign: TextAlign.center,
-                        controller: emailController,
-
-                      onSaved: (value){
-                        emailController.value.copyWith(text: _email)
-                      ;},
+                      controller: emailController,
+                      validator: (value)
+                      {
+                        if(value!.isEmpty || RegExp())
+                      },
+                      onSaved: (value) {
+                        emailController.value.copyWith(text: _email);
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(width / 30),
@@ -156,57 +153,6 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                   ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   SizedBox(
                     height: height / 50,
                   ),
@@ -215,40 +161,26 @@ class _HomepageState extends State<Homepage> {
                     size: size,
                     parameter_name: "Password",
                   ),
-
-
-
-
-
-
-
-
-
-
                   Container(
                     width: width / 1.10,
                     height: width / 10,
                     color: const Color(0xffEBF2FA),
-                    margin:
-                    EdgeInsets.only(top: width / 35, left: width / 25, right: width / 25),
+                    margin: EdgeInsets.only(
+                        top: width / 35, left: width / 25, right: width / 25),
                     child: TextFormField(
-                      keyboardType:TextInputType.visiblePassword ,
+                      keyboardType: TextInputType.visiblePassword,
                       textAlign: TextAlign.center,
                       obscureText: true,
-
-                      validator: (value)
-                      {
-                        if(isPasswordValid(value!))
-                          {
-                            return null;
-                          }else{
+                      validator: (value) {
+                        if (isPasswordValid(value!)) {
+                          return null;
+                        } else {
                           return "Password Atleast Contain 9 Character";
-                         }
-
+                        }
                       },
                       controller: passwordController,
                       cursorColor: Colors.black54,
-                      onSaved: (value){
+                      onSaved: (value) {
                         passwordController.value.copyWith(text: _password);
                       },
                       decoration: InputDecoration(
@@ -263,57 +195,29 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                   ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   SizedBox(
                     height: height / 15,
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: width / 25, right: width / 25),
+                    margin:
+                        EdgeInsets.only(left: width / 25, right: width / 25),
                     child: ElevatedButton(
-                      onPressed: ()async{
+                      onPressed: () async {
+                        try {
+                          final newuser =
+                              await _auth.signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
 
-                        try{
-                          final newuser=await _auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-
-                          if(newuser!=null)
-                          {
+                          if (newuser != null) {
                             print(_email);
                             print(_password);
                             print('Login');
-                            Navigator.pushNamed(context,'chatscreen');
+                            Navigator.pushNamed(context, 'chatscreen');
                           }
-                        }catch(e)
-                        {
+                        } catch (e) {
                           debugPrint('e');
-
                         }
-
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -324,7 +228,8 @@ class _HomepageState extends State<Homepage> {
                         child: Text(
                           "Log in",
                           style: GoogleFonts.roboto(
-                              fontSize: size.width / 20, fontWeight: FontWeight.bold),
+                              fontSize: size.width / 20,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
