@@ -1,26 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:say_it/pages/homepage.dart';
 import 'package:say_it/pages/signuppage.dart';
 import 'package:say_it/pages/signuppage.dart';
 import 'package:say_it/widgets/widgetclass.dart';
-void main()
+import 'package:say_it/pages/chatscree_n.dart';
+
+
+
+void main()async
 {
-  runApp(const MyApp());
+
+  WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
+  runApp( MyApp());
+
 }
 
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+   MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String username='';
-  String email='';
-  String password='';
- final  _formkey=GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,11 +34,13 @@ class _MyAppState extends State<MyApp> {
 
 
       ),
-      home: const Homepage() ,
+      home:  Homepage(),
 
       routes: {
         'login-screen':(context)=>Homepage(),
         'signup-screen':(context)=>Signup(),
+        'chatscreen':(context)=>chatscreen(),
+
       },
 
     );

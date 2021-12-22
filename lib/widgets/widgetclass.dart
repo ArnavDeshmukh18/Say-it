@@ -1,29 +1,49 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:say_it/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+/*
 class Loginorsignbutton extends StatelessWidget {
-  const Loginorsignbutton({
+   Loginorsignbutton({
     Key? key,
     required this.width,
     required this.size,
-    required this.Parameter, required this.onclicked,
+      required this.Parameter,
   }) : super(key: key);
 
   final double width;
   final Size size;
+
   final String Parameter;
-  final VoidCallback onclicked;
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(left: width / 25, right: width / 25),
       child: ElevatedButton(
-        onPressed: onclicked,
+        onPressed: ()async{
+          try{
+            final newuser=await _auth.createUserWithEmailAndPassword(email: email, password: password);
+            if(newuser!=null)
+              {
+                print(email);
+                print(password);
+              }
+          }catch(e)
+          {
+            debugPrint('e');
+
+          }
+
+        },
         child: Padding(
           padding: EdgeInsets.only(
               left: width / 2.95,
@@ -43,15 +63,14 @@ class Loginorsignbutton extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 class InputBox extends StatelessWidget {
-  InputBox({Key? key, required this.width, required this.inputtype})
+  InputBox({Key? key, required this.width, required this.inputtype, required this.Parameter})
       : super(key: key);
 
   final double width;
-  final TextInputType inputtype;
-var parameter;
+  final TextInputType inputtype;late final String Parameter;
 
 
 
@@ -65,14 +84,12 @@ var parameter;
       color: const Color(0xffEBF2FA),
       margin:
           EdgeInsets.only(top: width / 35, left: width / 25, right: width / 25),
-      child: TextFormField(
+      child: TextField(
         keyboardType: inputtype,
         cursorColor: Colors.black54,
-        validator: (var _parameter)
-        {
-
-
-        },
+       onChanged: (value){
+              Parameter=value;
+       },
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(width / 30),
@@ -160,7 +177,7 @@ class loginorsigntextbutton extends StatelessWidget {
   }
 }
 
-class Google_or_facebook_signup_button extends StatelessWidget {
+/*class Google_or_facebook_signup_button extends StatelessWidget {
   const Google_or_facebook_signup_button({
     Key? key,
     required this.width,
@@ -183,9 +200,9 @@ class Google_or_facebook_signup_button extends StatelessWidget {
       margin: EdgeInsets.all(width / 23),
     ));
   }
-}
+}*/
 
-
+/*
 class inputform extends StatefulWidget {
    inputform({Key? key, required this.width, required this.inputtype, required this.Parameter}) : super(key: key);
   final double width;
@@ -199,7 +216,7 @@ late final String Parameter;
 
 class _inputformState extends State<inputform> {
 
-
+  static final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -238,3 +255,4 @@ class _inputformState extends State<inputform> {
     );;
   }
 }
+*/
