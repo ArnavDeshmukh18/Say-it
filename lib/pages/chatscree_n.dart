@@ -71,31 +71,9 @@ void logout()async{
     return Container(
       color: Colors.white,
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.grey,
-          actions: [
-            Row(
-              children: [
-                SizedBox(
-                  width: width / 50,
-                ),
-                IconButton(
-                    onPressed: () {
-logout();
+       
 
-                    },
-                    icon: const Icon(Icons.arrow_back_ios)),
-                Text(
-                  "SAY IT",
-                  style: GoogleFonts.roboto(
-                      fontSize: size.width / 18,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ],
-        ),
+      ),
       ),
     );
   }

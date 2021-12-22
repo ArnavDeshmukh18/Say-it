@@ -134,9 +134,16 @@ class _HomepageState extends State<Homepage> {
                       cursorColor: Colors.black54,
                       textAlign: TextAlign.center,
                       controller: emailController,
+
                       validator: (value)
                       {
-                        if(value!.isEmpty || RegExp())
+                        if(value!.isEmpty)
+                          {
+                            return 'Enter Email';
+                          }
+                        else{
+                          return null;
+                        }
                       },
                       onSaved: (value) {
                         emailController.value.copyWith(text: _email);
@@ -144,11 +151,11 @@ class _HomepageState extends State<Homepage> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(width / 30),
-                          borderSide: const BorderSide(color: Colors.black38),
+                          borderSide: const BorderSide(color: Color(0xff395266)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(width / 30),
-                          borderSide: const BorderSide(color: Colors.black38),
+                          borderSide: const BorderSide(color:  Color(0xff395266)),
                         ),
                       ),
                     ),
@@ -171,11 +178,14 @@ class _HomepageState extends State<Homepage> {
                       keyboardType: TextInputType.visiblePassword,
                       textAlign: TextAlign.center,
                       obscureText: true,
-                      validator: (value) {
-                        if (isPasswordValid(value!)) {
+                      validator: (value)
+                      {
+                        if(value!.isEmpty)
+                        {
+                          return 'Enter Password';
+                        }
+                        else{
                           return null;
-                        } else {
-                          return "Password Atleast Contain 9 Character";
                         }
                       },
                       controller: passwordController,
@@ -186,11 +196,11 @@ class _HomepageState extends State<Homepage> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(width / 30),
-                          borderSide: const BorderSide(color: Colors.black38),
+                          borderSide: const BorderSide(color:  Color(0xff395266)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(width / 30),
-                          borderSide: const BorderSide(color: Colors.black38),
+                          borderSide: const BorderSide(color:  Color(0xff395266)),
                         ),
                       ),
                     ),
@@ -203,21 +213,24 @@ class _HomepageState extends State<Homepage> {
                         EdgeInsets.only(left: width / 25, right: width / 25),
                     child: ElevatedButton(
                       onPressed: () async {
-                        try {
-                          final newuser =
-                              await _auth.signInWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text);
+                        if(_formkey.currentState!.validate() ){
+                          try {
+                            final newuser =
+                            await _auth.signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text);
 
-                          if (newuser != null) {
-                            print(_email);
-                            print(_password);
-                            print('Login');
-                            Navigator.pushNamed(context, 'chatscreen');
+                            if (newuser != null) {
+                              print(_email);
+                              print(_password);
+                              print('Login');
+                              Navigator.pushNamed(context, 'chatscreen');
+                            }
+                          } catch (e) {
+                            debugPrint('e');
                           }
-                        } catch (e) {
-                          debugPrint('e');
                         }
+
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
